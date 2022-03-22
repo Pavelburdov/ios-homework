@@ -16,7 +16,6 @@
 		F6340DD027E9BFC600A15EE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6340DCF27E9BFC600A15EE6 /* ProfileViewController.swift */; };
 		F6340DD227E9C00600A15EE6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6340DD127E9C00600A15EE6 /* InfoViewController.swift */; };
 		F6340DDA27E9D1D700A15EE6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */; };
-		F6340DDC27E9D20600A15EE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6340DDB27E9D20600A15EE6 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		F6340DCF27E9BFC600A15EE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F6340DD127E9C00600A15EE6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
-		F6340DDB27E9D20600A15EE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */,
-				F6340DDB27E9D20600A15EE6 /* ProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -163,7 +160,6 @@
 				F6340DCC27E9BEA600A15EE6 /* FeedViewController.swift in Sources */,
 				F6340DDA27E9D1D700A15EE6 /* ProfileHeaderView.swift in Sources */,
 				F6340DD227E9C00600A15EE6 /* InfoViewController.swift in Sources */,
-				F6340DDC27E9D20600A15EE6 /* ProfileViewController.swift in Sources */,
 				F6340DBA27E9B7FD00A15EE6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
