@@ -42,8 +42,8 @@ class ProfileHeaderView: UIView {
 
     private lazy var statusButton: UIButton = {
         let button = UIButton()
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 4.0
+       // button.clipsToBounds = true
+        button.layer.cornerRadius = 4
         button.backgroundColor = .systemBlue
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -58,31 +58,33 @@ class ProfileHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.windowUIView()
+        self.drawSelf()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func windowUIView(){
+    private func drawSelf(){
         self.addSubview(nameLabel)
         self.addSubview(statusLabel)
         self.addSubview(statusButton)
+        self.addSubview(imageView)
 
-        let topAnchorNameLabel =  nameLabel.topAnchor.constraint(equalTo: self.nameLabel.topAnchor, constant: 27)
-        let leadingAnchorNameLabel = nameLabel.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: 16)
-        let trailingAnchorNameLabel = nameLabel.trailingAnchor.constraint(equalTo: self.nameLabel.trailingAnchor, constant: -16)
+        let topAnchorNameLabel =  nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27)
+        let leadingAnchorNameLabel = nameLabel.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: 160)
+        let trailingAnchorNameLabel = nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         let heightAnchorNameLabel = nameLabel.heightAnchor.constraint(equalToConstant: 30)
 
-        let leadingAnchorStatusLabel = statusLabel.leadingAnchor.constraint(equalTo: self.nameLabel.leadingAnchor, constant: 16)
-        let trailingStatusLabel = statusLabel.trailingAnchor.constraint(equalTo: self.nameLabel.trailingAnchor)
+        let leadingAnchorStatusLabel = statusLabel.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: 160)
+        let trailingStatusLabel = statusLabel.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor, constant: -16)
         let heightAnchorStatusLabel = statusLabel.heightAnchor.constraint(equalToConstant: 30)
+        let bottomAnchorStatusLabel = statusLabel.bottomAnchor.constraint(equalTo: self.statusButton.topAnchor, constant: -34)
 
-        let leadingAnchorButton = statusButton.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: 16)
+        let leadingAnchorButton = statusButton.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor)
         let trailingAnchorStatusButton = statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         let topAnchorStatusButton = statusButton.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 16)
         let heightAnchorStatusButton = statusButton.heightAnchor.constraint(equalToConstant: 50)
-        NSLayoutConstraint.activate([topAnchorNameLabel, leadingAnchorNameLabel, trailingAnchorNameLabel, heightAnchorNameLabel, leadingAnchorStatusLabel, trailingStatusLabel, heightAnchorStatusLabel, leadingAnchorButton, trailingAnchorStatusButton, topAnchorStatusButton, heightAnchorStatusButton])
+        NSLayoutConstraint.activate([topAnchorNameLabel, leadingAnchorNameLabel, trailingAnchorNameLabel, heightAnchorNameLabel, leadingAnchorStatusLabel, trailingStatusLabel, heightAnchorStatusLabel, bottomAnchorStatusLabel, leadingAnchorButton, trailingAnchorStatusButton, topAnchorStatusButton, heightAnchorStatusButton])
     }
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
