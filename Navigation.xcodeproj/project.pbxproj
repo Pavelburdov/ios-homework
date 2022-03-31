@@ -66,7 +66,6 @@
 				F6340DB927E9B7FD00A15EE6 /* SceneDelegate.swift */,
 				F6340DB727E9B7FD00A15EE6 /* AppDelegate.swift */,
 				F6340DCB27E9BEA600A15EE6 /* FeedViewController.swift */,
-				F6340DCF27E9BFC600A15EE6 /* ProfileViewController.swift */,
 				F6340DCD27E9BF9A00A15EE6 /* PostViewController.swift */,
 				F6340DD127E9C00600A15EE6 /* InfoViewController.swift */,
 				F6340DC027E9B7FE00A15EE6 /* Assets.xcassets */,
@@ -80,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */,
+				F6340DCF27E9BFC600A15EE6 /* ProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
