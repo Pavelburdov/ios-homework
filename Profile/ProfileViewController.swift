@@ -29,7 +29,6 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
         self.setupNavigationBar()
-        self.viewWillLayoutSubviews()
     }
     
     private func setupNavigationBar() {
@@ -37,17 +36,9 @@ final class ProfileViewController: UIViewController {
         self.navigationItem.title = "Profile"
     }
 
-    //    private func setupView() {
-    //        self.view.addSubview(statusButton)
-    //        let leadingAnchorBottonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-    //        let trailingAnchorBottonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-    //        let bottomAnchorBottonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
-    //        let heightAnchorBottonConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 50)
-    //        NSLayoutConstraint.activate([leadingAnchorBottonConstraint, trailingAnchorBottonConstraint, bottomAnchorBottonConstraint, heightAnchorBottonConstraint])
-    //    }
     private var heightAnchorConstraint: NSLayoutConstraint?
 
-    override func viewWillLayoutSubviews () {
+    override func viewWillLayoutSubviews() {
         self.view.addSubview(self.profileHeaderView)
         self.view.addSubview(self.statusButton)
         self.profileHeaderView.backgroundColor = .lightGray
