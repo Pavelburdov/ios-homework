@@ -7,7 +7,12 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+protocol ProfileHeaderViewProtocol: AnyObject {
+
+    func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
+}
+
+class ProfileHeaderView: UIView, UITextFieldDelegate {
 
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,6 +26,25 @@ class ProfileHeaderView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView
+    }()
+
+    private lazy var labelsStackView: UIStackView = { // создаем стэк для меток
+        let stackLabelView = UIStackView() //создаем стэк
+        stackLabelView.translatesAutoresizingMaskIntoConstraints = false //отключаем AutoresizingMask
+        stackLabelView.axis = .vertical //вертикальный стэк
+        stackLabelView.spacing = 40
+        stackLabelView.distribution = .fillEqually // на весь вью стэка
+
+        return stackLabelView
+    }()
+
+    private lazy var infoStackView: UIStackView = { // создаем стэк для меток
+        let stackView = UIStackView() //создаем стэк
+        stackView.axis = .horizontal // горизрнтальный стэк
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false //отключаем AutoresizingMask
+
+        return stackView
     }()
 
     private lazy var fullNameLabel: UILabel = {
@@ -43,6 +67,30 @@ class ProfileHeaderView: UIView {
         return label
     }()
 
+    //создаем свойство textField
+    private lazy var statusTextField: UITextField = { // Устанавливаем текстовое поле
+        let textField = UITextField()
+        textField.placeholder = "Введите статус"
+        textField.isHidden = true // текстовое поле спрятано
+        textField.backgroundColor = .white // цвет поля
+        textField.font = UIFont.systemFont(ofSize: 15)  // Шрифт и размеры
+        textField.textColor = .black // цвет текста
+        textField.layer.cornerRadius = 12.0  // делаем скругление
+        textField.layer.borderWidth = 1.0 // делаем рамку-обводку
+        textField.layer.borderColor = UIColor.black.cgColor // устанавливаем цвет рамке
+        textField.textAlignment = .center // расположение текста
+        textField.clearButtonMode = .whileEditing
+        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .always
+        let leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 20.0, height: 2.0)) // Отступ слева
+        textField.leftView = leftView // добавляем отступ
+        textField.leftViewMode = .always //всегда слева
+        textField.clipsToBounds = true  // устанавливаем вид в границах рамки
+        textField.translatesAutoresizingMaskIntoConstraints = false// отключаем констрейты
+
+        return textField
+    }()
+
     private lazy var statusButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 4
@@ -59,48 +107,6 @@ class ProfileHeaderView: UIView {
         return button
     }()
 
-    //создаем свойство textField
-    private lazy var statusTextField: UITextField = { // Устанавливаем текстовое поле
-        let textField = UITextField()
-        textField.isHidden = true // текстовое поле спрятано
-        textField.backgroundColor = .white // цвет поля
-        textField.font = UIFont.systemFont(ofSize: 15)  // Шрифт и размеры
-        textField.textColor = .black // цвет текста
-        textField.layer.cornerRadius = 12.0  // делаем скругление
-        textField.layer.borderWidth = 1.0 // делаем рамку-обводку
-        textField.layer.borderColor = UIColor.black.cgColor // устанавливаем цвет рамке
-        textField.textAlignment = .center // расположение текста
-        textField.clearButtonMode = .whileEditing
-        textField.clearButtonMode = .unlessEditing
-        textField.clearButtonMode = .always
-        let leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 20.0, height: 2.0)) // Отступ слева
-        textField.leftView = leftView // добавляем отступ
-        textField.leftViewMode = .always //всегда слева
-        textField.clipsToBounds = true  // устанавливаем вид в границах рамки
-        textField.placeholder = "Введите статус"  // плейсхолдер для красоты
-        textField.translatesAutoresizingMaskIntoConstraints = false// отключаем констрейты
-
-        return textField
-    }()
-
-    private lazy var labelsStackView: UIStackView = { // создаем стэк для меток
-        let stackLabelView = UIStackView() //создаем стэк
-        stackLabelView.translatesAutoresizingMaskIntoConstraints = false //отключаем AutoresizingMask
-        stackLabelView.axis = .vertical //вертикальный стэк
-        stackLabelView.spacing = 40
-        stackLabelView.distribution = .fillEqually // на весь вью стэка
-
-        return stackLabelView
-    }()
-
-    private lazy var infoStackView: UIStackView = { // создаем стэк для меток
-        let stackView = UIStackView() //создаем стэк
-        stackView.axis = .horizontal // горизрнтальный стэк
-        stackView.spacing = 16
-        stackView.translatesAutoresizingMaskIntoConstraints = false //отключаем AutoresizingMask
-        return stackView
-    }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.drawSelf()
@@ -112,14 +118,18 @@ class ProfileHeaderView: UIView {
 
     private var buttonTopConstraint: NSLayoutConstraint? //изменение верхнего констрейта кнопки
 
+    weak var delegate: ProfileHeaderViewProtocol?
+
     private func drawSelf() {
         self.addSubview(infoStackView)
+        self.addSubview(statusTextField)
+        self.addSubview(statusButton)
         self.infoStackView.addArrangedSubview(avatarImageView)
         self.infoStackView.addArrangedSubview(labelsStackView)
         self.labelsStackView.addArrangedSubview(fullNameLabel)
         self.labelsStackView.addArrangedSubview(statusLabel)
-        self.addSubview(statusButton)
-        self.addSubview(statusTextField)
+        self.statusTextField.delegate = self
+
 
         let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16) //вверх
         let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
@@ -132,24 +142,50 @@ class ProfileHeaderView: UIView {
         //когда constraint меняется в runtime его приоритет нужно менять
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
 
-        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.infoStackView.leadingAnchor) //слева
-        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor) //справа
+        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
+        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
         let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor) // книзу
         let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50) // высота
 
         NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, avatarImageViewRatioConstraint, self.buttonTopConstraint, leadingButtonConstraint,trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint].compactMap({$0}))
     }
-   
 
-    override func draw(_ rect: CGRect) {
+    private var statusText: String? = nil
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return false
     }
 
-
     @objc func didTapMyButton(){
-        let status = self.statusLabel.text
-        if status != nil {
-            print(status!)
+        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10)
+        let leadingTextFieldConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor)
+        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        let trailingTextFieldConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
+
+        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16)
+
+        if self.statusTextField.isHidden {
+
+            self.addSubview(self.statusTextField)
+            statusTextField.text = nil
+            statusButton.setTitle("Set status", for: .normal)
+            self.buttonTopConstraint?.isActive = false
+            NSLayoutConstraint.activate([topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint, buttonTopConstraint].compactMap( {$0} ))
+
+            statusTextField.becomeFirstResponder()
+
+        } else {
+            statusText = statusTextField.text!
+            statusLabel.text = "\(statusText ?? "")"
+            statusButton.setTitle("Show status", for: .normal)
+
+            self.statusTextField.removeFromSuperview()
+            NSLayoutConstraint.deactivate([ topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint].compactMap( {$0} ))
+        }
+
+        self.delegate?.didTapMyButton(textFieldIsVisible: self.statusTextField.isHidden) { [weak self] in
+            self?.statusTextField.isHidden.toggle()
         }
     }
 }
