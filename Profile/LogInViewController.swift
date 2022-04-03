@@ -7,7 +7,13 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, UITextFieldDelegate {
+
+    private lazy var scrollView: UIScrollView = {//создаем скроллвью
+        let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            return scrollView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
