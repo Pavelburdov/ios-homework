@@ -21,48 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         self.window?.backgroundColor = .white
         self.window?.makeKeyAndVisible()
-        let tabBarVC = UITabBarController()
+        let tabBarVC = TabBarViewController()
         self.window?.rootViewController = tabBarVC
-        //создадим два навигационных контроллера
-//        let feedViewController = UINavigationController(rootViewController: FeedViewController())
-//        let profileViewController = UINavigationController(rootViewController: ProfileViewController())
-//        let tabBarController = UITabBarController()
-//        tabBarController.viewControllers = [feedViewController, profileViewController]
-        self.window?.rootViewController = createTabBarController()
-//        tabBarController = UINavigationController(rootViewController: FeedViewController(), rootViewController: ProfileViewController())
-    }
-    //Настройка TabBar
-    //Создаем функцию контроллера поисковой навигации, который возвращает контроллер пользовательского интерфейса
-    func createFeedViewController() -> UINavigationController {
-        //Инициализируем поисковый контроллер
-        let feedViewController = FeedViewController()
-        // Добавляем заголовок который отобразиться вверху экрана
-        feedViewController.title = "Лента"
-        //настроим и саму кнопку, добавив на нее иконку и название. Создаем элемент панели вкладок пользовательского интерфейса UITabBarIt, где title: это заголовок, а image: в нашем случае системная иконка, tag:это индекс положения, где 0 - положение слева, а 1 справа
-        feedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "doc.richtext.fill"), tag: 0)
-        //Возвращаем навигатор пользовательского интерфейса
-        return UINavigationController(rootViewController: feedViewController)
-    }
-
-    //Настройка TabBar
-    //Создаем функцию контроллера поисковой навигации, который возвращает контроллер пользовательского интерфейса
-    func createProfileViewController() -> UINavigationController {
-        //Инициализируем поисковый контроллер
-        let profileViewController = ProfileViewController()
-        // Добавляем заголовок который отобразиться вверху экрана
-        profileViewController.title = "Профиль"
-        //настроим и саму кнопку, добавив на нее иконку и название. Создаем элемент панели вкладок пользовательского интерфейса UITabBarIt, где title: это заголовок, а image: в нашем случае системная иконка, tag:это индекс положения, где 0 - положение слева, а 1 справа
-        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle.fill"), tag: 1)
-        //Возвращаем навигатор пользовательского интерфейса
-        return UINavigationController(rootViewController: profileViewController)
-    }
-
-    func createTabBarController() -> UITabBarController {
-        let tabBarController = UITabBarController()
-        UITabBar.appearance().backgroundColor = .systemGray6
-        tabBarController.viewControllers = [createFeedViewController(), createProfileViewController()]
-        return tabBarController
-    }
 
     }
 
@@ -93,7 +53,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
-
+}
 
