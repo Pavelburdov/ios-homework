@@ -12,7 +12,7 @@ protocol ProfileHeaderViewProtocol: AnyObject {
     func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
 }
 
-class ProfileHeaderView: UIView, UITextFieldDelegate {
+final class ProfileHeaderView: UIView, UITextFieldDelegate {
 
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -85,7 +85,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         let leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 20.0, height: 2.0)) // Отступ слева
         textField.leftView = leftView // добавляем отступ
         textField.leftViewMode = .always //всегда слева
-        textField.clipsToBounds = true  // устанавливаем вид в границах рамки
+//        textField.clipsToBounds = true  // устанавливаем вид в границах рамки
         textField.translatesAutoresizingMaskIntoConstraints = false// отключаем констрейты
 
         return textField
@@ -96,6 +96,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.layer.cornerRadius = 4
         button.backgroundColor = .systemBlue
         button.setTitle("Show status", for: .normal)
+        button.setTitle("Set status", for: .selected)
         button.setTitleColor(.white, for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -150,17 +151,17 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, avatarImageViewRatioConstraint, self.buttonTopConstraint, leadingButtonConstraint,trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint].compactMap({$0}))
     }
 
-    private var statusText: String? = nil
+    private var statusText: String? = nil //приватная опциональная переменная с типом String
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool { //метод закрытия клавиатуры
         self.endEditing(true)
         return false
     }
 
     @objc func didTapMyButton(){
-        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10)
+        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
         let leadingTextFieldConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor)
-        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 34)
         let trailingTextFieldConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
 
         self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16)
@@ -181,7 +182,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             statusButton.setTitle("Show status", for: .normal)
 
             self.statusTextField.removeFromSuperview()
-            NSLayoutConstraint.deactivate([ topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint].compactMap( {$0} ))
+            NSLayoutConstraint.deactivate([ topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint])
         }
 
         self.delegate?.didTapMyButton(textFieldIsVisible: self.statusTextField.isHidden) { [weak self] in

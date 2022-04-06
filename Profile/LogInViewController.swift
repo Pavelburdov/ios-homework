@@ -117,9 +117,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     private lazy var buttonLogIn: UIButton = { //создаем кнопку
         let button = UIButton()
         button.layer.cornerRadius = 10
-        let image = UIImage(named: "blue_pixel")
+        //let image = UIImage(named: "blue_pixel")
         button.backgroundColor = UIColor(named: "Color")
-        button.setBackgroundImage(image, for: .normal)
+        //button.setBackgroundImage(image, for: .normal)
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
 
