@@ -114,16 +114,18 @@ class ProfileHeaderView: UIView {
 
     private func drawSelf() {
         self.addSubview(infoStackView)
+        self.addSubview(statusButton)
+        self.addSubview(statusTextField)
         self.infoStackView.addArrangedSubview(avatarImageView)
         self.infoStackView.addArrangedSubview(labelsStackView)
         self.labelsStackView.addArrangedSubview(fullNameLabel)
         self.labelsStackView.addArrangedSubview(statusLabel)
-        self.addSubview(statusButton)
-        self.addSubview(statusTextField)
+
 
         let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16) //вверх
         let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
         let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
+        
 
         let avatarImageViewRatioConstraint =
         self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0) // аватар 1 к 1  в стэке
@@ -132,8 +134,8 @@ class ProfileHeaderView: UIView {
         //когда constraint меняется в runtime его приоритет нужно менять
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
 
-        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.infoStackView.leadingAnchor) //слева
-        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor) //справа
+        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
+        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
         let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor) // книзу
         let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50) // высота
 

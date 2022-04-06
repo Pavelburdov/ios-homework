@@ -18,11 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-
         self.window = UIWindow(windowScene: windowScene)
         self.window?.backgroundColor = .white
         self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = UITabBarController()
+        let tabBarVC = UITabBarController()
+        self.window?.rootViewController = tabBarVC
         //создадим два навигационных контроллера
 //        let feedViewController = UINavigationController(rootViewController: FeedViewController())
 //        let profileViewController = UINavigationController(rootViewController: ProfileViewController())
@@ -30,7 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        tabBarController.viewControllers = [feedViewController, profileViewController]
         self.window?.rootViewController = createTabBarController()
 //        tabBarController = UINavigationController(rootViewController: FeedViewController(), rootViewController: ProfileViewController())
-
     }
     //Настройка TabBar
     //Создаем функцию контроллера поисковой навигации, который возвращает контроллер пользовательского интерфейса
@@ -65,6 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return tabBarController
     }
 
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -95,5 +95,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
-}
+
 

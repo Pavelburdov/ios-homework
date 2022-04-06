@@ -51,7 +51,7 @@ final class ProfileViewController: UIViewController {
         let leadingAnchorBottonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         let trailingAnchorBottonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         let bottomAnchorBottonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
-
-        NSLayoutConstraint.activate([topAnchor, leadingAnchor, trailingAnchor, self.heightAnchorConstraint, leadingAnchorBottonConstraint, trailingAnchorBottonConstraint, bottomAnchorBottonConstraint].compactMap({$0}))
+        let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
+        NSLayoutConstraint.activate([topAnchor, leadingAnchor, trailingAnchor, self.heightAnchorConstraint, leadingAnchorBottonConstraint, trailingAnchorBottonConstraint, bottomAnchorBottonConstraint, heightButtonConstraint].compactMap({$0}))
     }
 }
