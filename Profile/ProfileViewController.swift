@@ -12,7 +12,7 @@ final class ProfileViewController: UIViewController {
     private lazy var profileHeaderView: ProfileHeaderView = {
         let view = ProfileHeaderView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        view.delegate = self
         return view
     }()
 

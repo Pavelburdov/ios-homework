@@ -8,20 +8,20 @@
 import UIKit
 
 protocol ProfileHeaderViewProtocol: AnyObject {
-
     func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
 }
 
 final class ProfileHeaderView: UIView, UITextFieldDelegate {
 
     private lazy var avatarImageView: UIImageView = {
+
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Cat")
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 70
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -102,7 +102,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(didTapMyButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.didTapMyButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -135,6 +135,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16) //вверх
         let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
         let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
+
         let avatarImageViewRatioConstraint =
         self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0) // аватар 1 к 1  в стэке
         //констрейнты кнопки
