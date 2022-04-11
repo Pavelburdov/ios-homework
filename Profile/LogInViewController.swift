@@ -170,15 +170,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         NSLayoutConstraint.activate([scrollViewTopConstraint, scrollViewLeadingConstraint, scrollViewTrailingConstraint, scrollViewBottomConstraint, bottomLogoConstraint, widthLogoConstraint, heightLogoConstraint, centrXLogoConstraint, stackViewCentrXConstraint, stackViewCentrYConstraint, stackViewLeadingConstraint, stackViewTrailingConstraint, heightInfoTextField, heightPasswordTextField, heightButtonLogIn])
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-
     private func tapGesture() { //метод скрытия клавиатуры по нажатию на экран
-        let tapGesture = UIGestureRecognizer(target: self.view, action: #selector(view.endEditing))
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(view.endEditing))
         self.view.addGestureRecognizer(tapGesture)
     }
+
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        self.view.endEditing(true)
+//        return false
+//    }
 
     @objc func didTapLogButton() { //изменение прозрачности по нажатию на кнопку
         if buttonLogIn.isSelected {
