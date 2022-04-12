@@ -39,8 +39,9 @@ final class PostTableViewCell: UITableViewCell {
 
     private lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView
@@ -52,7 +53,8 @@ final class PostTableViewCell: UITableViewCell {
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .systemGray
-        label.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
+        label.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriority(750), for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -61,8 +63,8 @@ final class PostTableViewCell: UITableViewCell {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
+        stackView.distribution = .equalSpacing
+        stackView.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .vertical)
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -70,12 +72,12 @@ final class PostTableViewCell: UITableViewCell {
 
     private lazy var likesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Likes:"
+        label.text = "Likes: "
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         label.preferredMaxLayoutWidth = self.frame.size.width
-        label.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
+
         label.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -184,10 +186,10 @@ extension PostTableViewCell: Setupable {
     func setup(with viewModel: ViewModelProtocol) {
         guard let viewModel = viewModel as? ViewModel else { return }
         self.authorLabel.text = viewModel.author
-        self.descriptionLabel.text = viewModel.description
         self.postImageView.image = UIImage(named: viewModel.image)
-        self.likesLabel.text? += String(viewModel.likes)
-        self.viewsLabel.text? += String(viewModel.views)
+        self.descriptionLabel.text = viewModel.description
+        self.likesLabel.text = "Likes: " + String(viewModel.likes)
+        self.viewsLabel.text = "Views: " +  String(viewModel.views)
     }
 }
 
