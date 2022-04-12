@@ -15,8 +15,21 @@ let titlePost = Post.init(title: "Мой пост")
 
 class FeedViewController: UIViewController {
     //Создаем кнопку
-    private lazy var transitionButton: UIButton = {
+    private lazy var firstButton: UIButton = {
         let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        button.backgroundColor = .systemBlue
+        button.setTitle("Перейти на пост", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var secondButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
         button.backgroundColor = .systemBlue
@@ -26,11 +39,23 @@ class FeedViewController: UIViewController {
         return button
     }()
 
+    private lazy var buttonsStackView: UIStackView = { // создаем стэк для меток
+        let stackView = UIStackView() //создаем стэк
+        stackView.translatesAutoresizingMaskIntoConstraints = false //отключаем AutoresizingMask
+        stackView.axis = .vertical //вертикальный стэк
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually // на весь вью стэка
+
+        return stackView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //Добавляем кнопку "Перейти на пост"
-        self.view.addSubview(transitionButton)
+        self.view.addSubview(buttonsStackView)
+        self.buttonsStackView.addArrangedSubview(firstButton)
+        self.buttonsStackView.addArrangedSubview(secondButton)
         self.setupButton()
 
     }
@@ -42,12 +67,14 @@ class FeedViewController: UIViewController {
     }
 //настройка кнопки (констреймы, действие...)
     private func setupButton() {
-        transitionButton.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
-            self.transitionButton.bottomAnchor.constraint(equalTo:
-                                                            self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        self.transitionButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
-        self.transitionButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        self.transitionButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        let firstStackViewConstraint = buttonsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let secondStackViewConstraint = buttonsStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        let leadingFirstButtonConstraint = self.firstButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+        let trailingFirstButtonConstraint = self.firstButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+        let leadingSecondButtonConstraint = self.secondButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+        let trailingSecondButtonConstraint = self.secondButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+
+        NSLayoutConstraint.activate([firstStackViewConstraint, secondStackViewConstraint, leadingFirstButtonConstraint, trailingFirstButtonConstraint, leadingSecondButtonConstraint, trailingSecondButtonConstraint])
     }
     // переход на PostViewController
         @objc func didTapTransitionButton() {
