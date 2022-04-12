@@ -15,9 +15,9 @@ final class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")// регистрируем ячейку
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")// регистрируем ячейку
+        tableView.rowHeight = UITableView.automaticDimension //автоматическое задание высоты ячейки заполняемое контентом
         tableView.estimatedRowHeight = 44
 
         return tableView
@@ -36,13 +36,13 @@ final class ProfileViewController: UIViewController {
         return JSONDecoder()
     }()
 
-    private var dataSource: [News.Post] = []
+    private var dataSource: [News.Post] = [] //массив хранящий модели
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.fetchPosts { [weak self] posts in
-            self?.dataSource = posts
-            self?.tableView.reloadData()
+            self?.dataSource = posts // в массив закидываем файлы из json 
+            self?.tableView.reloadData() //обновление метода dataSourse
         }
         self.tableView.tableHeaderView = tableHeaderView
         self.setupNavigationBar()
@@ -96,11 +96,11 @@ final class ProfileViewController: UIViewController {
         header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width, height: CGFloat(heightConstraint!.constant))).height
     }
 
-    private func fetchPosts(completion: @escaping([News.Post]) -> Void) {
-        if let path = Bundle.main.path(forResource: "news", ofType: "json") {
+    private func fetchPosts(completion: @escaping([News.Post]) -> Void) {//получение данных в json формате
+        if let path = Bundle.main.path(forResource: "news", ofType: "json") {//подтягиеваем их с моего проекта news.json
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-                let news = try self.jsonDecoder.decode(News.self, from: data)
+                let news = try self.jsonDecoder.decode(News.self, from: data)//декодируем
                 print("json data: \(news)")
                 completion(news.posts)
             } catch let error {
@@ -122,8 +122,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
             return cell
         }
-
-        let post = self.dataSource[indexPath.row]
+//настраиваем ячейку
+        let post = self.dataSource[indexPath.row] //проходим по каждому индксу строки массива
         let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
         cell.setup(with: viewModel)
         return cell
