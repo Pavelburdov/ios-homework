@@ -63,9 +63,9 @@ class PhotosViewController: UIViewController {
 
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate {
 
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
 // количество элементов в секции
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return carImage.count

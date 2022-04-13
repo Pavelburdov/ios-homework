@@ -139,8 +139,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
 //настраиваем ячейку
-        let post = self.dataSource[indexPath.row - 1] //проходим по каждому индксу строки массива
-        let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
+        let post = self.dataSource[indexPath.row - 1] //проходим по каждому индексу строки массива
+        let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)//заполняем ячейку
         cell.setup(with: viewModel)
         return cell
     }

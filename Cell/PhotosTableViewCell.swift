@@ -66,7 +66,7 @@ class PhotosTableViewCell: UITableViewCell {
 
         return layout
     }()
-
+// метод для скролвью
     private lazy var photoCollectionView: UICollectionView = {  // PHOTO
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
