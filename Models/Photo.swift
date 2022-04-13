@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Cars {
+
+    var image: String
+}
