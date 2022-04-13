@@ -8,17 +8,18 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
-
+    // создаем tableView
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemGray6
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.delegate = self //назначаем делегат
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")// регистрируем ячейку
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")// регистрируем ячейку
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.rowHeight = UITableView.automaticDimension //автоматическое задание высоты ячейки заполняемое контентом
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 300
 
         return tableView
     }()
@@ -113,21 +114,37 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+// методы заполнения таблицы
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.count
+        return self.dataSource.count + 1 //указываем количество ячеек
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotosTableViewCell else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+
+                return cell
+            }
+            cell.selectionStyle = .none
+            cell.delegate = self
+            cell.layer.shouldRasterize = true
+            cell.layer.rasterizationScale = UIScreen.main.scale
+
+            return cell
+        } else {
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
             return cell
         }
 //настраиваем ячейку
-        let post = self.dataSource[indexPath.row] //проходим по каждому индксу строки массива
+        let post = self.dataSource[indexPath.row - 1] //проходим по каждому индксу строки массива
         let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
         cell.setup(with: viewModel)
         return cell
     }
+}
 }
 
 extension ProfileViewController: ProfileHeaderViewProtocol {
@@ -144,5 +161,10 @@ extension ProfileViewController: ProfileHeaderViewProtocol {
         }
     }
 }
+    extension ProfileViewController: PhotosTableViewCellProtocol { // ПЕРЕХОД К ФОТОГРАФИЯМ
 
-
+        func delegateButtonAction(cell: PhotosTableViewCell) {
+            let photosViewController = PhotosViewController()
+            self.navigationController?.pushViewController(photosViewController, animated: true)
+        }
+    }

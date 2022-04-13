@@ -8,6 +8,7 @@
 import UIKit
 
 protocol ProfileHeaderViewProtocol: AnyObject {
+
     func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
 }
 
