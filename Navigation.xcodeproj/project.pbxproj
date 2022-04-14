@@ -28,6 +28,10 @@
 		F641AC1927F9C3A900C129D8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641AC1827F9C3A900C129D8 /* TabBarViewController.swift */; };
 		F641AC1B27F9C42500C129D8 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641AC1A27F9C42500C129D8 /* LogInViewController.swift */; };
 		F68B5E6B280764B5003C0EBA /* GesturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68B5E6A280764B5003C0EBA /* GesturesViewController.swift */; };
+		F69C11752808747D00B8D108 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C11742808747D00B8D108 /* User.swift */; };
+		F69C11782808831A00B8D108 /* Extension + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C11772808831A00B8D108 /* Extension + String.swift */; };
+		F69C117A280884CE00B8D108 /* Extension + UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C1179280884CE00B8D108 /* Extension + UIAlertController.swift */; };
+		F69C117C2808864000B8D108 /* Extension + UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C117B2808864000B8D108 /* Extension + UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,10 @@
 		F641AC1827F9C3A900C129D8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F641AC1A27F9C42500C129D8 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		F68B5E6A280764B5003C0EBA /* GesturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturesViewController.swift; sourceTree = "<group>"; };
+		F69C11742808747D00B8D108 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F69C11772808831A00B8D108 /* Extension + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + String.swift"; sourceTree = "<group>"; };
+		F69C1179280884CE00B8D108 /* Extension + UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIAlertController.swift"; sourceTree = "<group>"; };
+		F69C117B2808864000B8D108 /* Extension + UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +80,8 @@
 			children = (
 				F61155242800B0ED00C93F84 /* News.swift */,
 				F604677C2805F15C00C88323 /* Photo.swift */,
+				F69C11742808747D00B8D108 /* User.swift */,
+				F69C1176280882D900B8D108 /* Extention */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -152,6 +162,16 @@
 			path = Gestures;
 			sourceTree = "<group>";
 		};
+		F69C1176280882D900B8D108 /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				F69C11772808831A00B8D108 /* Extension + String.swift */,
+				F69C1179280884CE00B8D108 /* Extension + UIAlertController.swift */,
+				F69C117B2808864000B8D108 /* Extension + UIView.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,9 +243,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F69C117C2808864000B8D108 /* Extension + UIView.swift in Sources */,
 				F604677D2805F15C00C88323 /* Photo.swift in Sources */,
 				F611552A2800BF6600C93F84 /* PostTableViewCell.swift in Sources */,
 				F60467792805EAE200C88323 /* PhotosCollectionViewCell.swift in Sources */,
+				F69C117A280884CE00B8D108 /* Extension + UIAlertController.swift in Sources */,
 				F604677F28061B7600C88323 /* PhotosTableViewCell.swift in Sources */,
 				F641AC1927F9C3A900C129D8 /* TabBarViewController.swift in Sources */,
 				F6340DCE27E9BF9A00A15EE6 /* PostViewController.swift in Sources */,
@@ -241,6 +263,8 @@
 				F6340DBA27E9B7FD00A15EE6 /* SceneDelegate.swift in Sources */,
 				F604677B2805F0C400C88323 /* CarsPhoto.swift in Sources */,
 				F611552D2800C0B300C93F84 /* Setupable.swift in Sources */,
+				F69C11752808747D00B8D108 /* User.swift in Sources */,
+				F69C11782808831A00B8D108 /* Extension + String.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
