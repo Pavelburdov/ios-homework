@@ -133,7 +133,7 @@ class GesturesViewController: UIViewController {
         } completion: { _ in
         }
 
-        UIView.animate(withDuration: 0.2) { //анимация длится 0.3 сек с задержкой 0.5
+        UIView.animate(withDuration: 0.2) { //анимация длится 0.2 сек 
             self.myButton.alpha = self.isExpanded ? 1 : 0 //изменяется прозрачность кнопки
             self.view.layoutIfNeeded()
         } completion: { _ in
