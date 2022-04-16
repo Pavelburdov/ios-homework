@@ -13,6 +13,7 @@ class TabBarViewController: UITabBarController {
 
         case feed
         case profile
+        case gestures
 
         var title: String {
             switch self {
@@ -20,6 +21,8 @@ class TabBarViewController: UITabBarController {
                     return "Лента"
                 case .profile:
                     return "Профиль"
+                case .gestures:
+                    return "Жесты"
             }
         }
         var iconName: UIImage? {
@@ -28,6 +31,8 @@ class TabBarViewController: UITabBarController {
                     return UIImage(systemName: "house.circle")
                 case .profile:
                     return UIImage(systemName: "person.circle")
+                case .gestures:
+                    return UIImage(systemName: "hand.raised.circle")
             }
         }
     }
@@ -38,13 +43,15 @@ class TabBarViewController: UITabBarController {
     }
 
     func setupTabBar() {
-        let itemBar: [TabBarItem] = [.feed, .profile]
+        let itemBar: [TabBarItem] = [.feed, .profile, .gestures]
         self.viewControllers = itemBar.map ( { tabBarItem in
             switch tabBarItem {
                 case .feed:
                     return UINavigationController(rootViewController: FeedViewController())
                 case .profile:
                     return UINavigationController(rootViewController: LogInViewController())
+                case .gestures:
+                    return UINavigationController(rootViewController: GesturesViewController())
             }
         })
 

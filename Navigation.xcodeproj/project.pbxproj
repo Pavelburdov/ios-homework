@@ -27,6 +27,7 @@
 		F6340DDA27E9D1D700A15EE6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */; };
 		F641AC1927F9C3A900C129D8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641AC1827F9C3A900C129D8 /* TabBarViewController.swift */; };
 		F641AC1B27F9C42500C129D8 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641AC1A27F9C42500C129D8 /* LogInViewController.swift */; };
+		F68B5E6B280764B5003C0EBA /* GesturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68B5E6A280764B5003C0EBA /* GesturesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		F6340DD927E9D1D700A15EE6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		F641AC1827F9C3A900C129D8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F641AC1A27F9C42500C129D8 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		F68B5E6A280764B5003C0EBA /* GesturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				F6340DCD27E9BF9A00A15EE6 /* PostViewController.swift */,
 				F6340DD127E9C00600A15EE6 /* InfoViewController.swift */,
 				F641AC1827F9C3A900C129D8 /* TabBarViewController.swift */,
+				F68B5E6928076486003C0EBA /* Gestures */,
 				F6340DC027E9B7FE00A15EE6 /* Assets.xcassets */,
 				F61155212800AF1900C93F84 /* news.json */,
 				F6340DC227E9B7FE00A15EE6 /* LaunchScreen.storyboard */,
@@ -139,6 +142,14 @@
 				F641AC1A27F9C42500C129D8 /* LogInViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		F68B5E6928076486003C0EBA /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				F68B5E6A280764B5003C0EBA /* GesturesViewController.swift */,
+			);
+			path = Gestures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +231,7 @@
 				F6340DCE27E9BF9A00A15EE6 /* PostViewController.swift in Sources */,
 				F641AC1B27F9C42500C129D8 /* LogInViewController.swift in Sources */,
 				F6340DB827E9B7FD00A15EE6 /* AppDelegate.swift in Sources */,
+				F68B5E6B280764B5003C0EBA /* GesturesViewController.swift in Sources */,
 				F6340DD027E9BFC600A15EE6 /* ProfileViewController.swift in Sources */,
 				F6340DCC27E9BEA600A15EE6 /* FeedViewController.swift in Sources */,
 				F6340DDA27E9D1D700A15EE6 /* ProfileHeaderView.swift in Sources */,
