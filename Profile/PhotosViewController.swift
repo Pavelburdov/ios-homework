@@ -66,11 +66,11 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-// количество элементов в секции
+    // количество элементов в секции
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return carImage.count
     }
-// создаем ячейку по имени коллекции
+    // создаем ячейку по имени коллекции
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollection", for: indexPath) as! PhotosCollectionViewCell
         
@@ -90,5 +90,22 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollection", for: indexPath) as! PhotosCollectionViewCell
+        let car = carImage[indexPath.row]
+        let viewModel = PhotosCollectionViewCell.ViewModel(image: car.image)
+        cell.setup(with: viewModel)
+        cell.frame = self.view.bounds
+        cell.contentMode = .scaleAspectFit
+        cell.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImage))
+        cell.addGestureRecognizer(tap)
+        self.view.addSubview(cell)
+    }
+
+    @objc func dismissImage(_ sender: UITapGestureRecognizer) {
+        sender.view?.removeFromSuperview()
     }
 }

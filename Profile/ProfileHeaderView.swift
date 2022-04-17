@@ -179,6 +179,14 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
             statusTextField.becomeFirstResponder()
 
         } else {
+            
+// реализуем анимацию если поле не заполнено
+            guard statusTextField.text != "" else {
+                statusTextField.backgroundColor = .systemRed
+                statusTextField.shake()
+                return
+            }
+
             statusText = statusTextField.text!
             statusLabel.text = "\(statusText ?? "")"
             statusButton.setTitle("Show status", for: .normal)

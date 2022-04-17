@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol PhotosTableViewCellProtocol: AnyObject { // КНОПКА
-    func delegateButtonAction(cell: PhotosTableViewCell)
-}
+//protocol PhotosTableViewCellProtocol: AnyObject { // КНОПКА
+//    func delegateButtonAction(cell: PhotosTableViewCell)
+//}
 
 class PhotosTableViewCell: UITableViewCell {
 
@@ -17,7 +17,7 @@ class PhotosTableViewCell: UITableViewCell {
         static let itemCount: CGFloat = 4
     }
 
-    weak var delegate: PhotosTableViewCellProtocol? // КНОПКА
+//    weak var delegate: PhotosTableViewCellProtocol? // КНОПКА
 
     private lazy var backView: UIView = {
         let view = UIView()
@@ -48,16 +48,19 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var transitionButton: UIButton = { // КНОПКА
-        let button = UIButton()
-        let image = UIImage(systemName: "arrow.right")
-        button.setBackgroundImage(image, for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false // Отключаем AutoresizingMask
-        button.setContentCompressionResistancePriority(UILayoutPriority(250), for: .horizontal)
+    private lazy var arrowImage: UIImageView = {
 
-        return button
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "arrow.right")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .white
+         imageView.clipsToBounds = true
+
+        return imageView
+
     }()
+
 
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -92,21 +95,21 @@ class PhotosTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.backView)
         self.backView.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.titleLabel)
-        self.stackView.addArrangedSubview(self.transitionButton)
+        self.stackView.addArrangedSubview(self.arrowImage)
         self.backView.addSubview(photoCollectionView)
         activateConstraints()
     }
 
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            self.backView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+            self.backView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             self.backView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.backView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.backView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+            self.backView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
             self.stackView.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 12),
             self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12),
             self.stackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12),
-            self.transitionButton.heightAnchor.constraint(equalTo: self.stackView.heightAnchor, multiplier: 1),
+          self.arrowImage.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor),
             self.photoCollectionView.topAnchor.constraint(equalTo: self.stackView.bottomAnchor),
             self.photoCollectionView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12),
             self.photoCollectionView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12),
@@ -114,10 +117,10 @@ class PhotosTableViewCell: UITableViewCell {
             self.photoCollectionView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25)
         ])
     }
-    
-        @objc private func buttonAction() {  // КНОПКА
-            delegate?.delegateButtonAction(cell: self)
-        }
+
+//        @objc private func buttonAction() {  // КНОПКА
+//            delegate?.delegateButtonAction(cell: self)
+//        }
 // метод для размещения отображаемого контента, где задаем размеры для фоток
     private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
         let needWidth = width - 4 * spacing

@@ -56,7 +56,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - EXTENSIONS
 //добавляем фото
 extension PhotosCollectionViewCell: Setupable { // MODEL
 
