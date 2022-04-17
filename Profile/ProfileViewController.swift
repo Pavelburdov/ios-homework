@@ -42,7 +42,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.fetchPosts { [weak self] posts in
-            self?.dataSource = posts // в массив закидываем файлы из json 
+            self?.dataSource = posts // в массив закидываем файлы из json
             self?.tableView.reloadData() //обновление метода dataSourse
         }
         self.tableView.tableHeaderView = tableHeaderView
@@ -86,11 +86,6 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, widthConstraint, heightConstraint, bottomConstraint].compactMap({ $0 }))
     }
 
-//    func tapGesture() {
-//        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(view.endEditing))
-//        self.view.addGestureRecognizer(tapGesture)
-//    }
-
 
     func updateHeaderViewHeight(for header: UIView?) {
         guard let header = header else { return }
@@ -114,7 +109,7 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
-// методы заполнения таблицы
+    // методы заполнения таблицы
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count + 1 //указываем количество ячеек
     }
@@ -126,57 +121,56 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
                 return cell
             }
-//            cell.selectionStyle = .none
-//            cell.delegate = self
+
             cell.layer.shouldRasterize = true
             cell.layer.rasterizationScale = UIScreen.main.scale
 
             return cell
         } else {
-// ячейки посты
+            // ячейки посты
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
-            return cell
-        }
-//настраиваем ячейку
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
+            //настраиваем ячейку
             cell.selectionStyle = .none
             cell.delegate = self
-        let post = self.dataSource[indexPath.row - 1] //проходим по каждому индексу строки массива
-        let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)//заполняем ячейку
-        cell.setup(with: viewModel)
-        return cell
+            let post = self.dataSource[indexPath.row - 1] //проходим по каждому индексу строки массива
+            let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)//заполняем ячейку
+            cell.setup(with: viewModel)
+            return cell
+        }
     }
-}
 
-// удаление поста
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    // удаление поста
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-    if indexPath.row == 0 {
-        let photoVC = PhotosViewController()
-        self.navigationController?.pushViewController(photoVC, animated: true)
+        if indexPath.row == 0 {
+            let photoVC = PhotosViewController()
+            self.navigationController?.pushViewController(photoVC, animated: true)
+        }
     }
-}
 
-func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
 
-    if indexPath.row == 0 {
+        if indexPath.row == 0 {
 
-        return .none
-    } else {
+            return .none
+        } else {
 
-        return .delete
+            return .delete
+        }
     }
-}
 
-func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         tableView.beginUpdates()
-    self.dataSource.remove(at: indexPath.row - 1)
-    tableView.deleteRows(at: [indexPath], with: .automatic)
+        self.dataSource.remove(at: indexPath.row - 1)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
 
-       }
+    }
 
 }
 
@@ -195,46 +189,38 @@ extension ProfileViewController: ProfileHeaderViewProtocol {
     }
 }
 
-//extension ProfileViewController: PhotosTableViewCellProtocol { // ПЕРЕХОД К ФОТОГРАФИЯМ
-//
-//    func delegateButtonAction(cell: PhotosTableViewCell) {
-//        let photosViewController = PhotosViewController()
-//        self.navigationController?.pushViewController(photosViewController, animated: true)
-//    }
-//}
-
 extension ProfileViewController: PostTableViewCellProtocol  { // нажатие на лайк или просмотры
 
-        func tapPostImageViewGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ПРОСМОТРОВ {
-            let largePostView = PostView()
-            guard let index = self.tableView.indexPath(for: cell)?.row else { return }
-            let indexPath = IndexPath(row: index, section: 0)
-            let post = self.dataSource[indexPath.row - 1]
+    func tapPostImageViewGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ПРОСМОТРОВ {
+        let largePostView = PostView()
+        guard let index = self.tableView.indexPath(for: cell)?.row else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        let post = self.dataSource[indexPath.row - 1]
 
 
-            let viewModel = PostView.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
+        let viewModel = PostView.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
 
-            largePostView.setup(with: viewModel)
-            self.view.addSubview(largePostView)
+        largePostView.setup(with: viewModel)
+        self.view.addSubview(largePostView)
 
-            largePostView.translatesAutoresizingMaskIntoConstraints = false
+        largePostView.translatesAutoresizingMaskIntoConstraints = false
 
-            NSLayoutConstraint.activate([
-                largePostView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                largePostView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                largePostView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                largePostView.topAnchor.constraint(equalTo: view.topAnchor)
-            ])
+        NSLayoutConstraint.activate([
+            largePostView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            largePostView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            largePostView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            largePostView.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
 
-            self.dataSource[indexPath.row - 1].views += 1
-            self.tableView.reloadRows(at: [indexPath], with: .fade)
+        self.dataSource[indexPath.row - 1].views += 1
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
 
-        }
-
-        func tapLikeTitleGestureRecognizerDelegate(cell: PostTableViewCell) {
-            guard let index = self.tableView.indexPath(for: cell)?.row else { return }
-            let indexPath = IndexPath(row: index, section: 0)
-            self.dataSource[indexPath.row - 1].likes += 1
-            self.tableView.reloadRows(at: [indexPath], with: .fade)
-        }
     }
+
+    func tapLikeTitleGestureRecognizerDelegate(cell: PostTableViewCell) {
+        guard let index = self.tableView.indexPath(for: cell)?.row else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        self.dataSource[indexPath.row - 1].likes += 1
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+}
