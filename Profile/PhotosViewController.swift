@@ -8,20 +8,21 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
-
+    
     private enum Constant {
         static let itemCount: CGFloat = 3
     }
-
+    
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
-
+        
         return layout
     }()
-
+    
     private lazy var photoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
@@ -30,7 +31,7 @@ class PhotosViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -41,10 +42,10 @@ class PhotosViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Photo Gallery"
     }
-
+    
     private func setupCollectionView() {
         self.view.addSubview(self.photoCollectionView)
-
+        
         NSLayoutConstraint.activate([
             self.photoCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.photoCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -52,20 +53,17 @@ class PhotosViewController: UIViewController {
             self.photoCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-
+    
     private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
         let needWidth = width - 4 * spacing
         let itemWidth = floor(needWidth / Constant.itemCount)
-
+        
         return CGSize(width: itemWidth, height: itemWidth)
     }
 }
 
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+    
     // количество элементов в секции
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return carImage.count
@@ -77,35 +75,41 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         let car = carImage[indexPath.row]
         let viewModel = PhotosCollectionViewCell.ViewModel(image: car.image)
         cell.setup(with: viewModel)
-
+        
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing
-
+        
         return self.itemSize(for: collectionView.frame.width, with: spacing ?? 0)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-
+        
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollection", for: indexPath) as! PhotosCollectionViewCell
+        let animatedPhotoViewController = AnimatedPhotoViewController()
+        
         let car = carImage[indexPath.row]
-        let viewModel = PhotosCollectionViewCell.ViewModel(image: car.image)
-        cell.setup(with: viewModel)
-        cell.frame = self.view.bounds
-        cell.contentMode = .scaleAspectFit
-        cell.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImage))
-        cell.addGestureRecognizer(tap)
-        self.view.addSubview(cell)
-    }
-
-    @objc func dismissImage(_ sender: UITapGestureRecognizer) {
-        sender.view?.removeFromSuperview()
+        let viewModel = AnimatedPhotoViewController.ViewModel(image: car.image)
+        animatedPhotoViewController.setup(with: viewModel)
+        
+        self.view.addSubview(animatedPhotoViewController.view)
+        self.addChild(animatedPhotoViewController)
+        animatedPhotoViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            animatedPhotoViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            animatedPhotoViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            animatedPhotoViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            animatedPhotoViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        animatedPhotoViewController.didMove(toParent: self)
     }
 }

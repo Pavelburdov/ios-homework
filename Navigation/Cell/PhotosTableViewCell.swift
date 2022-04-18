@@ -118,9 +118,6 @@ class PhotosTableViewCell: UITableViewCell {
         ])
     }
 
-//        @objc private func buttonAction() {  // КНОПКА
-//            delegate?.delegateButtonAction(cell: self)
-//        }
 // метод для размещения отображаемого контента, где задаем размеры для фоток
     private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
         let needWidth = width - 4 * spacing
