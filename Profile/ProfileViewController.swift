@@ -23,16 +23,7 @@ final class ProfileViewController: UIViewController {
         
         return tableView
     }()
-    
-    private lazy var tableHeaderView: ProfileHeaderView = {
-        let view = ProfileHeaderView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        return view
-    }()
-    
-    private var heightConstraint: NSLayoutConstraint?
-    
+
     private lazy var jsonDecoder: JSONDecoder = {
         return JSONDecoder()
     }()
@@ -45,21 +36,15 @@ final class ProfileViewController: UIViewController {
             self?.dataSource = posts // в массив закидываем файлы из json
             self?.tableView.reloadData() //обновление метода dataSourse
         }
-        self.tableView.tableHeaderView = tableHeaderView
+
         self.setupNavigationBar()
         self.setupView()
-        //tapGesture()
-        setupProfileHeaderView()
+
     }
     
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationItem.title = "Profile"
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        updateHeaderViewHeight(for: tableView.tableHeaderView)
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     private func setupView() {
@@ -72,26 +57,7 @@ final class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, bottomConstraint])
     }
-    
-    private func setupProfileHeaderView() {
-        self.view.backgroundColor = .lightGray
-        
-        let topConstraint = self.tableHeaderView.topAnchor.constraint(equalTo: tableView.topAnchor)
-        let leadingConstraint = self.tableHeaderView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor)
-        let trailingConstraint = self.tableHeaderView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor)
-        let widthConstraint = self.tableHeaderView.widthAnchor.constraint(equalTo: tableView.widthAnchor)
-        self.heightConstraint = self.tableHeaderView.heightAnchor.constraint(equalToConstant: 220)
-        let bottomConstraint = self.tableHeaderView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor)
-        
-        NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, widthConstraint, heightConstraint, bottomConstraint].compactMap({ $0 }))
-    }
-    
-    
-    func updateHeaderViewHeight(for header: UIView?) {
-        guard let header = header else { return }
-        header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width, height: CGFloat(heightConstraint!.constant))).height
-    }
-    
+
     private func fetchPosts(completion: @escaping([News.Post]) -> Void) {//получение данных в json формате
         if let path = Bundle.main.path(forResource: "news", ofType: "json") {//подтягиеваем их с моего проекта news.json
             do {
@@ -142,7 +108,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
-    
+//
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return ProfileHeaderView()
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 250
+    }
+
     // удаление поста
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -155,8 +129,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
         if indexPath.row == 0 {
-            
             return .none
+
         } else {
             
             return .delete
@@ -171,33 +145,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.endUpdates()
         
     }
-    
-}
-
-extension ProfileViewController: ProfileHeaderViewProtocol {
-    func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 250:220
-        tableView.beginUpdates()
-        tableView.reloadSections(IndexSet(0..<1), with: .automatic)
-        tableView.endUpdates()
-        
-        UIView.animate(withDuration: 0.3, delay: 0.0) {
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            completion()
-        }
-    }
 }
 
 extension ProfileViewController: PostTableViewCellProtocol  { // нажатие на лайк или просмотры
     
-    func tapPostImageViewGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ПРОСМОТРОВ {
+    func tapPostImageViewGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ПРОСМОТРОВ
         let largePostView = PostView()
         guard let index = self.tableView.indexPath(for: cell)?.row else { return }
         let indexPath = IndexPath(row: index, section: 0)
         let post = self.dataSource[indexPath.row - 1]
-        
-        
+
         let viewModel = PostView.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
         
         largePostView.setup(with: viewModel)
@@ -217,7 +174,7 @@ extension ProfileViewController: PostTableViewCellProtocol  { // нажатие 
         
     }
     
-    func tapLikeTitleGestureRecognizerDelegate(cell: PostTableViewCell) {
+    func tapLikeTitleGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ЛАЙКОВ
         guard let index = self.tableView.indexPath(for: cell)?.row else { return }
         let indexPath = IndexPath(row: index, section: 0)
         self.dataSource[indexPath.row - 1].likes += 1

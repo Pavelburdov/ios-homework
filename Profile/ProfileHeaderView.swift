@@ -19,10 +19,8 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Cat")
         imageView.layer.borderWidth = 3
-        imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 70
-        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -72,14 +70,13 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     private lazy var statusTextField: UITextField = { // Устанавливаем текстовое поле
         let textField = UITextField()
         textField.placeholder = "Введите статус"
-        textField.isHidden = true // текстовое поле спрятано
         textField.backgroundColor = .white // цвет поля
         textField.font = UIFont.systemFont(ofSize: 15)  // Шрифт и размеры
         textField.textColor = .black // цвет текста
         textField.layer.cornerRadius = 12.0  // делаем скругление
         textField.layer.borderWidth = 1.0 // делаем рамку-обводку
         textField.layer.borderColor = UIColor.black.cgColor // устанавливаем цвет рамке
-        textField.textAlignment = .center // расположение текста
+        //textField.textAlignment = .center // расположение текста
         textField.clearButtonMode = .whileEditing
         textField.clearButtonMode = .unlessEditing
         textField.clearButtonMode = .always
@@ -96,8 +93,8 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         let button = UIButton()
         button.layer.cornerRadius = 4
         button.backgroundColor = .systemBlue
-        button.setTitle("Show status", for: .normal)
-        button.setTitle("Set status", for: .selected)
+        // button.setTitle("Show status", for: .normal)
+        button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -118,8 +115,8 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var buttonTopConstraint: NSLayoutConstraint? //изменение верхнего констрейта кнопки
-    
+    //    private var buttonTopConstraint: NSLayoutConstraint? //изменение верхнего констрейта кнопки
+
     weak var delegate: ProfileHeaderViewProtocol?
     
     private func drawSelf() {
@@ -133,23 +130,27 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.statusTextField.delegate = self
         
         
-        let topConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16) //вверх
-        let leadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
-        let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
-        
-        let avatarImageViewRatioConstraint =
-        self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0) // аватар 1 к 1  в стэке
-        //констрейнты кнопки
-        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 16) //вверх
-        //когда constraint меняется в runtime его приоритет нужно менять
-        self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
-        
-        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16) //слева
-        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16) //справа
-        let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor) // книзу
-        let heightButtonConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50) // высота
-        
-        NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, avatarImageViewRatioConstraint, self.buttonTopConstraint, leadingButtonConstraint,trailingButtonConstraint, bottomButtonConstraint, heightButtonConstraint].compactMap({$0}))
+
+        let stackViewTopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
+        let stackViewLeadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
+        let stackViewTrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+
+        let avatarImageViewWidthConstraint = self.avatarImageView.widthAnchor.constraint(equalToConstant: 138)
+        let avatarImageViewHeightConstraint = self.avatarImageView.heightAnchor.constraint(equalToConstant: 138)
+
+        let buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16)
+        let buttonLeadingConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
+        let buttonTrailingConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        let buttonHeightConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
+        let buttonBottomConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+
+        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10)
+        let leadingTextFieldConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor)
+        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        let trailingTextFieldConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.labelsStackView.trailingAnchor)
+
+        NSLayoutConstraint.activate([ stackViewTopConstraint, stackViewLeadingConstraint, stackViewTrailingConstraint, avatarImageViewWidthConstraint, buttonTopConstraint, buttonLeadingConstraint, buttonTrailingConstraint, avatarImageViewHeightConstraint, buttonHeightConstraint, buttonBottomConstraint, topTextFieldConstraint, leadingTextFieldConstraint, heightTextFieldConstraint, trailingTextFieldConstraint
+                                    ])
     }
     
     private var statusText: String? = nil //приватная опциональная переменная с типом String
@@ -160,44 +161,16 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     }
     
     @objc func didTapMyButton(){
-        
-        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10)
-        let leadingTextFieldConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor)
-        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
-        let trailingTextFieldConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
-        
-        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16)
-        
-        if self.statusTextField.isHidden {
-            
-            self.addSubview(self.statusTextField)
-            statusTextField.text = nil
-            statusButton.setTitle("Set status", for: .normal)
-            self.buttonTopConstraint?.isActive = false
-            NSLayoutConstraint.activate([topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint, buttonTopConstraint].compactMap( {$0} ))
-            
-            statusTextField.becomeFirstResponder()
-            
-        } else {
-            
-            // реализуем анимацию если поле не заполнено
-            guard statusTextField.text != "" else {
-                statusTextField.backgroundColor = .systemRed
-                statusTextField.shake()
-                return
-            }
-            
-            statusText = statusTextField.text!
-            statusLabel.text = "\(statusText ?? "")"
-            statusButton.setTitle("Show status", for: .normal)
-            
-            self.statusTextField.removeFromSuperview()
-            NSLayoutConstraint.deactivate([ topTextFieldConstraint, leadingTextFieldConstraint, trailingTextFieldConstraint, heightTextFieldConstraint].compactMap( {$0} ))
+
+        guard statusTextField.text != "" else {
+            statusTextField.backgroundColor = .systemRed
+            statusTextField.shake()
+            return
         }
-        
-        self.delegate?.didTapMyButton(textFieldIsVisible: self.statusTextField.isHidden) { [weak self] in
-            self?.statusTextField.isHidden.toggle()
-        }
+
+        statusText = statusTextField.text!
+        statusLabel.text = "\(statusText ?? "")"
+        self.statusTextField.text = nil
+        self.endEditing(true)
     }
 }
-
