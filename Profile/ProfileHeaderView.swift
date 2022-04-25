@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol ProfileHeaderViewProtocol: AnyObject {
-    
-    func didTapMyButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
-}
-
 final class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private lazy var avatarImageView: UIImageView = {
@@ -108,18 +103,17 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = .systemGray6
         self.drawSelf()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //    private var buttonTopConstraint: NSLayoutConstraint? //изменение верхнего констрейта кнопки
 
-    weak var delegate: ProfileHeaderViewProtocol?
     
     private func drawSelf() {
+
         self.addSubview(infoStackView)
         self.addSubview(statusTextField)
         self.addSubview(statusButton)
@@ -130,27 +124,26 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.statusTextField.delegate = self
         
         
+        NSLayoutConstraint.activate([
 
-        let stackViewTopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
-        let stackViewLeadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
-        let stackViewTrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor),
+        self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+        self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
 
-        let avatarImageViewWidthConstraint = self.avatarImageView.widthAnchor.constraint(equalToConstant: 138)
-        let avatarImageViewHeightConstraint = self.avatarImageView.heightAnchor.constraint(equalToConstant: 138)
+        self.avatarImageView.widthAnchor.constraint(equalToConstant: 138),
+        self.avatarImageView.heightAnchor.constraint(equalToConstant: 138),
 
-        let buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16)
-        let buttonLeadingConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
-        let buttonTrailingConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        let buttonHeightConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-        let buttonBottomConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        self.statusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 16),
+        self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+        self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+        self.statusButton.heightAnchor.constraint(equalToConstant: 50),
+        self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
 
-        let topTextFieldConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10)
-        let leadingTextFieldConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor)
-        let heightTextFieldConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
-        let trailingTextFieldConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.labelsStackView.trailingAnchor)
-
-        NSLayoutConstraint.activate([ stackViewTopConstraint, stackViewLeadingConstraint, stackViewTrailingConstraint, avatarImageViewWidthConstraint, buttonTopConstraint, buttonLeadingConstraint, buttonTrailingConstraint, avatarImageViewHeightConstraint, buttonHeightConstraint, buttonBottomConstraint, topTextFieldConstraint, leadingTextFieldConstraint, heightTextFieldConstraint, trailingTextFieldConstraint
-                                    ])
+        self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: -10),
+        self.statusTextField.leadingAnchor.constraint(equalTo: self.labelsStackView.leadingAnchor),
+        self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+        self.statusTextField.trailingAnchor.constraint(equalTo: self.labelsStackView.trailingAnchor)
+        ])
     }
     
     private var statusText: String? = nil //приватная опциональная переменная с типом String

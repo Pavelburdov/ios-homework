@@ -23,8 +23,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    // MARK: LIFECYCLE METHODS
-
     override init(frame: CGRect) {
         super .init(frame: frame)
         setupPhotoView()
@@ -33,8 +31,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - SETUP SUBVIEWS
 
     private func setupPhotoView() {
         self.addSubview(photoView)

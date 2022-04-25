@@ -139,43 +139,42 @@ class PostView: UIView {
     }
 
     private func setupConstraints() {
-       let topMViewConstraint = self.mainView.topAnchor.constraint(equalTo: self.topAnchor)
-        let leadingMViewConstraint = self.mainView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
-        let trailingMViewConstraint = self.mainView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        let bottomMViewConstraint = self.mainView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        NSLayoutConstraint.activate([
+            self.mainView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.mainView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.mainView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.mainView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
-        let centerXConstraintBackView = self.backView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        let centerYConstraintBackView = self.backView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        let leadingConstraintBackView = self.backView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
-        let trailingConstraintBackView = self.backView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.backView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.backView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.backView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.backView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 
-        let topConstraintAuthorLabel = self.authorLabel.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 16)
-        let leadingConstraintAuthorLabel = self.authorLabel.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16)
-        let trailingConstraintAuthorLabel = self.authorLabel.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16)
+            self.authorLabel.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 16),
+            self.authorLabel.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16),
+            self.authorLabel.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16),
 
-        let topConstraintPostImageView = self.postImageView.topAnchor.constraint(equalTo: self.authorLabel.bottomAnchor, constant: 12)
-        let leadingConstraintPostImageView = self.postImageView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor)
-        let trailingConstraintPostImageView = self.postImageView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor)
-        let widthPostImageView = self.postImageView.heightAnchor.constraint(equalTo: self.backView.widthAnchor, multiplier: 1.0)
+            self.postImageView.topAnchor.constraint(equalTo: self.authorLabel.bottomAnchor, constant: 12),
+            self.postImageView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor),
+            self.postImageView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor),
+            self.postImageView.heightAnchor.constraint(equalTo: self.backView.widthAnchor, multiplier: 1.0),
 
-        let topConstraintDescriptionLabel = self.descriptionLabel.topAnchor.constraint(equalTo: self.postImageView.bottomAnchor, constant: 16)
-        let leadingConstraintDescriptionLabel = self.descriptionLabel.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16)
-        let trailingConstraintDescriptionLabel = self.descriptionLabel.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16)
+            self.descriptionLabel.topAnchor.constraint(equalTo: self.postImageView.bottomAnchor, constant: 16),
+            self.descriptionLabel.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16),
+            self.descriptionLabel.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16),
 
-        let topConstraintLikeStackView = self.stackView.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16)
-        let leadingConstraintLikeStackView = self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16)
-        let trailingConstraintLikeStackView = self.stackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16)
-        let bottomConstraintLikeStackView = self.stackView.bottomAnchor.constraint(equalTo: self.backView.bottomAnchor, constant: -16)
+            self.stackView.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
+            self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 16),
+            self.stackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -16),
+            self.stackView.bottomAnchor.constraint(equalTo: self.backView.bottomAnchor, constant: -16),
 
-        let topButtonConstraint = self.exitButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
-        let trailingButtonConstraint = self.exitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        let heightButtonConstraint = self.exitButton.heightAnchor.constraint(equalToConstant: 40)
-        let widthButtonConstraint = self.exitButton.widthAnchor.constraint(equalToConstant: 40)
+            self.exitButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            self.exitButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.exitButton.heightAnchor.constraint(equalToConstant: 40),
+            self.exitButton.widthAnchor.constraint(equalToConstant: 40)
+        ])
 
-        NSLayoutConstraint.activate([topMViewConstraint, leadingMViewConstraint, trailingMViewConstraint, bottomMViewConstraint, topConstraintAuthorLabel, topConstraintPostImageView, widthPostImageView, leadingConstraintAuthorLabel, trailingConstraintAuthorLabel, topConstraintDescriptionLabel, leadingConstraintDescriptionLabel, trailingConstraintDescriptionLabel, topConstraintLikeStackView, leadingConstraintLikeStackView, trailingConstraintLikeStackView, bottomConstraintLikeStackView, leadingConstraintPostImageView, trailingConstraintPostImageView, topButtonConstraint, trailingButtonConstraint, heightButtonConstraint, widthButtonConstraint, leadingConstraintBackView, trailingConstraintBackView, centerXConstraintBackView, centerYConstraintBackView])
-        
     }
-
 
     @objc private func didTapButton() { //возврат к родительскому вьюконтроллеру
         removeFromSuperview()

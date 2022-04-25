@@ -108,7 +108,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
-//
+    //
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return ProfileHeaderView()
     }
@@ -153,6 +153,7 @@ extension ProfileViewController: PostTableViewCellProtocol  { // нажатие 
         let largePostView = PostView()
         guard let index = self.tableView.indexPath(for: cell)?.row else { return }
         let indexPath = IndexPath(row: index, section: 0)
+        self.dataSource[indexPath.row - 1].views += 1
         let post = self.dataSource[indexPath.row - 1]
 
         let viewModel = PostView.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
@@ -168,8 +169,7 @@ extension ProfileViewController: PostTableViewCellProtocol  { // нажатие 
             largePostView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             largePostView.topAnchor.constraint(equalTo: view.topAnchor)
         ])
-        
-        self.dataSource[indexPath.row - 1].views += 1
+
         self.tableView.reloadRows(at: [indexPath], with: .fade)
         
     }

@@ -7,17 +7,11 @@
 
 import UIKit
 
-//protocol PhotosTableViewCellProtocol: AnyObject { // КНОПКА
-//    func delegateButtonAction(cell: PhotosTableViewCell)
-//}
-
 class PhotosTableViewCell: UITableViewCell {
 
     private enum Constant {
         static let itemCount: CGFloat = 4
     }
-
-//    weak var delegate: PhotosTableViewCellProtocol? // КНОПКА
 
     private lazy var backView: UIView = {
         let view = UIView()
@@ -55,7 +49,7 @@ class PhotosTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .white
-         imageView.clipsToBounds = true
+        imageView.clipsToBounds = true
 
         return imageView
 
@@ -69,7 +63,7 @@ class PhotosTableViewCell: UITableViewCell {
 
         return layout
     }()
-// метод для скролвью
+    // метод для скролвью
     private lazy var photoCollectionView: UICollectionView = {  // PHOTO
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,7 +103,7 @@ class PhotosTableViewCell: UITableViewCell {
             self.stackView.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 12),
             self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12),
             self.stackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12),
-          self.arrowImage.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor),
+            self.arrowImage.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor),
             self.photoCollectionView.topAnchor.constraint(equalTo: self.stackView.bottomAnchor),
             self.photoCollectionView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12),
             self.photoCollectionView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12),
@@ -118,7 +112,7 @@ class PhotosTableViewCell: UITableViewCell {
         ])
     }
 
-// метод для размещения отображаемого контента, где задаем размеры для фоток
+    // метод для размещения отображаемого контента, где задаем размеры для фоток
     private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
         let needWidth = width - 4 * spacing
         let itemWidth = floor(needWidth / Constant.itemCount)
@@ -137,9 +131,9 @@ extension PhotosTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCollection", for: indexPath) as! PhotosCollectionViewCell //у ячеке есть свойство dequeueReusableCell для переиспользования ячеек
 
-            let car = carImage[indexPath.row]
-            let viewModel = PhotosCollectionViewCell.ViewModel(image: car.image)
-            cell.setup(with: viewModel)
+        let car = carImage[indexPath.row]
+        let viewModel = PhotosCollectionViewCell.ViewModel(image: car.image)
+        cell.setup(with: viewModel)
 
         return cell
     }
