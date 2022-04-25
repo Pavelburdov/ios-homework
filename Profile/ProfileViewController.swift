@@ -76,12 +76,41 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     // методы заполнения таблицы
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.count + 1 //указываем количество ячеек
+    // Добавляем хедер
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return ProfileHeaderView()
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+
+            return 250 // ВЫСОТА HEADER
+
+        } else {
+
+            return 0
+        }
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+
+            return 1
+
+        } else {
+
+            return self.dataSource.count//указываем количество ячеек
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotosTableViewCell else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
                 
@@ -102,19 +131,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             //настраиваем ячейку
             cell.selectionStyle = .none
             cell.delegate = self
-            let post = self.dataSource[indexPath.row - 1] //проходим по каждому индексу строки массива
+            let post = self.dataSource[indexPath.row] //проходим по каждому индексу строки массива
             let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)//заполняем ячейку
             cell.setup(with: viewModel)
             return cell
         }
-    }
-    //
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return ProfileHeaderView()
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 250
     }
 
     // удаление поста
@@ -152,9 +173,9 @@ extension ProfileViewController: PostTableViewCellProtocol  { // нажатие 
     func tapPostImageViewGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ПРОСМОТРОВ
         let largePostView = PostView()
         guard let index = self.tableView.indexPath(for: cell)?.row else { return }
-        let indexPath = IndexPath(row: index, section: 0)
-        self.dataSource[indexPath.row - 1].views += 1
-        let post = self.dataSource[indexPath.row - 1]
+        let indexPath = IndexPath(row: index, section: 1)
+        self.dataSource[indexPath.row].views += 1
+        let post = self.dataSource[indexPath.row]
 
         let viewModel = PostView.ViewModel(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
         
@@ -176,8 +197,8 @@ extension ProfileViewController: PostTableViewCellProtocol  { // нажатие 
     
     func tapLikeTitleGestureRecognizerDelegate(cell: PostTableViewCell) { // УВЕЛИЧЕНИЕ ЛАЙКОВ
         guard let index = self.tableView.indexPath(for: cell)?.row else { return }
-        let indexPath = IndexPath(row: index, section: 0)
-        self.dataSource[indexPath.row - 1].likes += 1
+        let indexPath = IndexPath(row: index, section: 1)
+        self.dataSource[indexPath.row].likes += 1
         self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }
