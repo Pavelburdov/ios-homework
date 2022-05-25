@@ -10,7 +10,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
     // создаем tableView
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .systemGray6
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
