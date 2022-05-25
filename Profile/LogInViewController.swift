@@ -15,14 +15,20 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return scrollView
     }()
 
+    private lazy var contentView: UIView = {//создаем скроллвью
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        self.navigationController?.navigationBar.isHidden = true
-        self.setupView()
-        self.tapGesture()
-        self.infoTextField.delegate = self
-        self.passwordTextField.delegate = self
+        view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
+        setupView()
+        tapGesture()
+//                self.infoTextField.delegate = self
+//                self.passwordTextField.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)//подписываем под уведомления, назначаем метод который будет срабатывать при появлении клавы
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)//подписываем под уведомления, назначаем метод который будет срабатывать при скрытии клавы
@@ -30,7 +36,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @objc func kbWillShow(notification: Notification) { //метод для того чтобы текстфилды приподнимались при появлении клавиатуры
         if let kbFrameSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue { // стандартная запись для получения значения размеров клавиатуры
-            scrollView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height * 0.1 )//используем это свойство чтобы сместить скролвью
+            scrollView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height * 0.1)//используем это свойство чтобы сместить скролвью
             scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbFrameSize.height, right: 0)
         }
     }
@@ -141,44 +147,44 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     private func setupView() {
         self.view.addSubview(scrollView)
-        self.scrollView.addSubview(stackView)
-        self.scrollView.addSubview(logoImageView)
+        self.scrollView.addSubview(contentView)
+        self.contentView.addSubview(stackView)
+        self.contentView.addSubview(logoImageView)
         self.stackView.addArrangedSubview(textFieldStackView)
         self.stackView.addArrangedSubview(buttonLogIn)
         self.textFieldStackView.addArrangedSubview(infoTextField)
         self.textFieldStackView.addArrangedSubview(passwordTextField)
 
-        let scrollViewTopConstraint = self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor)
-        let scrollViewLeadingConstraint = self.scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor)
-        let scrollViewTrailingConstraint = self.scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor)
-        let scrollViewBottomConstraint = self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        NSLayoutConstraint.activate([
 
-        let bottomLogoConstraint = self.logoImageView.bottomAnchor.constraint(equalTo: self.stackView.topAnchor, constant: -120)
-        let widthLogoConstraint = self.logoImageView.widthAnchor.constraint(equalToConstant: 100)
-        let heightLogoConstraint = self.logoImageView.heightAnchor.constraint(equalToConstant: 100)
-        let centrXLogoConstraint = self.logoImageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
+            self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 
-        let stackViewCentrXConstraint = self.stackView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
-        let stackViewCentrYConstraint = self.stackView.centerYAnchor.constraint(equalTo: self.scrollView.centerYAnchor)
-        let stackViewLeadingConstraint = self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 16)
-        let stackViewTrailingConstraint = self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -16)
+            self.contentView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
+            self.contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            self.contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
 
-        let heightInfoTextField = self.infoTextField.heightAnchor.constraint(equalToConstant: 50)
-        let heightPasswordTextField = self.passwordTextField.heightAnchor.constraint(equalToConstant: 50)
-        let heightButtonLogIn = self.buttonLogIn.heightAnchor.constraint(equalToConstant: 50)
+            self.logoImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 120),
+            self.logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            self.logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            self.logoImageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.logoImageView.bottomAnchor.constraint(equalTo: self.stackView.topAnchor, constant: -120),
 
-        NSLayoutConstraint.activate([scrollViewTopConstraint, scrollViewLeadingConstraint, scrollViewTrailingConstraint, scrollViewBottomConstraint, bottomLogoConstraint, widthLogoConstraint, heightLogoConstraint, centrXLogoConstraint, stackViewCentrXConstraint, stackViewCentrYConstraint, stackViewLeadingConstraint, stackViewTrailingConstraint, heightInfoTextField, heightPasswordTextField, heightButtonLogIn])
+            self.stackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.stackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+
+            self.infoTextField.heightAnchor.constraint(equalToConstant: 50),
+            self.passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            self.buttonLogIn.heightAnchor.constraint(equalToConstant: 50),
+
+        ])
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-
-    private func tapGesture() { //метод скрытия клавиатуры по нажатию на экран
-        let tapGesture = UIGestureRecognizer(target: self.view, action: #selector(view.endEditing))
-        self.view.addGestureRecognizer(tapGesture)
-    }
 
     @objc func didTapLogButton() { //изменение прозрачности по нажатию на кнопку
         if buttonLogIn.isSelected {
@@ -195,3 +201,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
 }
+    extension LogInViewController { // KEYBOARD
+
+        func tapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(view.endEditing))
+            self.view.addGestureRecognizer(tapGesture)
+        }
+    }
+
