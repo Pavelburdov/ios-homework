@@ -1,5 +1,6 @@
 
 # Курс iOS Developer. Дипломная работа. Нетология 2022 
+<a href="https://developer.apple.com/swift" target="_blank"><img src="https://img.shields.io/badge/Language-Swift_5-blueviolet.svg" alt="Language: Swift 5" /></a>
 
 ### Prerequisites
 
