@@ -17,7 +17,7 @@ Device Orientation: Portrait
 
 Download all the files from this repo onto a local directory. Compile the program on Xcode.
 
-## В данной работе я использовал библиотеку UIKit/AutoLayout/User Defaults/Models
+## Using UIKit/AutoLayout/Extantions/Models/Delegate/Protocols/User Default
 
 
 ### Экран с логикой:
@@ -36,5 +36,6 @@ ___
 ![output1](https://user-images.githubusercontent.com/73440376/224119351-579dc4a9-7947-4adf-b692-445a856c21df.gif)
 ___
 ### Экран с коллекцией фото:
-* При однократном нажатии на ячейку с фото реализована анимация!
-[output2](https://user-images.githubusercontent.com/73440376/224120782-3035312a-48ec-4875-bb8a-0eeb1b9473cd.gif)
+* При однократном нажатии на ячейку с фото реализована анимация
+
+![output2](https://user-images.githubusercontent.com/73440376/224120782-3035312a-48ec-4875-bb8a-0eeb1b9473cd.gif)
